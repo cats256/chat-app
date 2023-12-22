@@ -75,7 +75,11 @@ const DashboardLayout = () => {
                                         </IconButton>
                                     </Box>
                                 ) : (
-                                    <IconButton onClick={() => setSelected(el.index)} sx={{ width: "max-content", color: "#000" }} key={el.index}>
+                                    <IconButton
+                                        onClick={() => setSelected(el.index)}
+                                        sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }}
+                                        key={el.index}
+                                    >
                                         {el.icon}
                                     </IconButton>
                                 )
@@ -89,7 +93,10 @@ const DashboardLayout = () => {
                                 </IconButton>
                             </Box>
                         ) : (
-                            <IconButton onClick={() => setSelected(3)} sx={{ width: "max-content", color: "#000" }}>
+                            <IconButton
+                                onClick={() => setSelected(3)}
+                                sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }}
+                            >
                                 <Gear />
                             </IconButton>
                         )}
