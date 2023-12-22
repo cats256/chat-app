@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Box, Divider, IconButton, Stack } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Logo from "../../assets/Images/logo.ico";
 import { Nav_Buttons } from "../../data";
@@ -8,6 +8,8 @@ import { Gear } from "phosphor-react";
 
 const DashboardLayout = () => {
     const theme = useTheme();
+
+    const [selected, setSelected] = useState(0);
     return (
         <>
             <Box
@@ -18,15 +20,33 @@ const DashboardLayout = () => {
                     <Box sx={{ backgroundColor: theme.palette.primary.main, height: 64, width: 64, borderRadius: 1.5 }}>
                         <img src={Logo} alt={"Chat App Logo"} style={{ height: 64, width: 64 }} />
                     </Box>
-                    <Stack spacing={3}>
-                        {Nav_Buttons.map((el) => (
-                            <IconButton key={el.index}>{el.icon}</IconButton>
-                        ))}
+                    <Stack sx={{ width: "max-content" }} alignItems="center" spacing={3}>
+                        {Nav_Buttons.map((el) =>
+                            el.index === selected ? (
+                                <Box p={1} sx={{ backgroundColor: theme.palette.primary.main, borderRadius: 1.5 }}>
+                                    <IconButton sx={{ width: "max-content", color: "#fff" }} key={el.index}>
+                                        {el.icon}
+                                    </IconButton>
+                                </Box>
+                            ) : (
+                                <IconButton onClick={() => setSelected(el.index)} sx={{ width: "max-content", color: "#000" }} key={el.index}>
+                                    {el.icon}
+                                </IconButton>
+                            )
+                        )}
                     </Stack>
-                    <Divider />
-                    <IconButton>
-                        <Gear />
-                    </IconButton>
+                    <Divider sx={{ width: "48px" }} />
+                    {selected === 3 ? (
+                        <Box p={1} sx={{ backgroundColor: theme.palette.primary.main, borderRadius: 1.5 }}>
+                            <IconButton sx={{ width: "max-content", color: "#fff" }}>
+                                <Gear />
+                            </IconButton>
+                        </Box>
+                    ) : (
+                        <IconButton onClick={() => setSelected(3)} sx={{ width: "max-content", color: "#000" }}>
+                            <Gear />
+                        </IconButton>
+                    )}
                 </Stack>
             </Box>
             <Outlet />
